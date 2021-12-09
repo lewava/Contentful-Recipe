@@ -49,7 +49,7 @@ export default function RecipeDetails({ recipe }) {
       />
       <h2>{title}</h2>
 
-      <div>
+      <div className="info">
         <p>Take about {cookingTime} mins to cook.</p>
         <h3>Ingredients:</h3>
 
@@ -62,6 +62,7 @@ export default function RecipeDetails({ recipe }) {
         <h3>Method:</h3>
         <div>{documentToReactComponents(method)}</div>
       </div>
+
       <style jsx>{`
         h2,
         h3 {
