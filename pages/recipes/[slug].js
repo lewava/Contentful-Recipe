@@ -1,6 +1,6 @@
 import { createClient } from "contentful";
-import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import Image from "next/image";
 import Skeleton from "../../components/Skeleton";
 
 const client = createClient({
@@ -25,7 +25,7 @@ export const getStaticPaths = async () => {
   };
 };
 
-export async function getStaticProps({ params }) {
+export const getStaticProps = async ({ params }) => {
   const { items } = await client.getEntries({
     content_type: "recipe",
     "fields.slug": params.slug,
@@ -35,7 +35,7 @@ export async function getStaticProps({ params }) {
     props: { recipe: items[0] },
     revalidate: 1,
   };
-}
+};
 
 export default function RecipeDetails({ recipe }) {
   if (!recipe) return <Skeleton />;
@@ -44,16 +44,18 @@ export default function RecipeDetails({ recipe }) {
     recipe.fields;
 
   return (
-    <div className="banner">
-      <Image
-        src={"https:" + featuredImage.fields.file.url}
-        width={featuredImage.fields.file.details.image.width}
-        height={featuredImage.fields.file.details.image.height}
-      />
-      <h2>{title}</h2>
+    <div>
+      <div className="banner">
+        <Image
+          src={"https:" + featuredImage.fields.file.url}
+          width={featuredImage.fields.file.details.image.width}
+          height={featuredImage.fields.file.details.image.height}
+        />
+        <h2>{title}</h2>
+      </div>
 
       <div className="info">
-        <p>Take about {cookingTime} mins to cook.</p>
+        <p>Takes about {cookingTime} mins to cook.</p>
         <h3>Ingredients:</h3>
 
         {ingredients.map((ing) => (
